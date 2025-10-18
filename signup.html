@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - Scribble Pro</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-logo">Scribble Pro ✏️</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="classes.html">Classes</a></li>
+      <li><a href="dashboard.html" class="active">Dashboard</a></li>
+      <li id="loginLink"><a href="login.html">Login</a></li>
+      <li id="logoutLink" style="display:none;"><button id="logoutBtn">Logout</button></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Create an Account</h1>
+      <p>Sign up to start your Scribble Pro journey and track your writing progress!</p>
+      <form id="signupForm">
+        <input type="text" id="name" placeholder="Full Name" required><br><br>
+        <input type="email" id="email" placeholder="Email" required><br><br>
+        <input type="password" id="password" placeholder="Password" required><br><br>
+        <button type="submit" class="btn-primary">Sign Up</button>
+      </form>
+      <p>Already have an account? <a href="login.html">Login here</a></p>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Scribble Pro. Built for learning and creativity.</p>
+  </footer>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA9NwHIkh0KeNmi-08hgRjbRYd8gCzhcoQ",
+      authDomain: "scribble-pro-4aec7.firebaseapp.com",
+      projectId: "scribble-pro-4aec7",
+      storageBucket: "scribble-pro-4aec7.firebasestorage.app",
+      messagingSenderId: "831180379713",
+      appId: "1:831180379713:web:579ab16716ea1ed23818c0",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const signupForm = document.getElementById("signupForm");
+
+    signupForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          updateProfile(user, { displayName: name }).then(() => {
+            window.location.href = "dashboard.html";
+          });
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    });
+  </script>
+</body>
+</html>

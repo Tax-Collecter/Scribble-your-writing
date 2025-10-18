@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scribble Pro Classes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-logo">Scribble Pro ✏️</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="classes.html" class="active">Classes</a></li>
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li id="loginLink"><a href="login.html">Login</a></li>
+      <li id="logoutLink" style="display:none;"><button id="logoutBtn">Logout</button></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Explore Our Writing Tools</h1>
+      <p>Boost your writing skills with our interactive classes and tools. Pick a tool to start creating!</p>
+    </div>
+  </section>
+
+  <!-- Classes/Tools Grid -->
+  <section class="tools">
+    <h2>All Classes & Tools</h2>
+    <div class="tools-grid">
+      <div class="tool-card"><h3>Story Burger</h3><a href="https://planomy.github.io/Story-Burger/" target="_blank">Open Tool</a></div>
+      <div class="tool-card"><h3>Quadruple Verbaliser</h3><a href="https://planomy.github.io/Quadruple-Verbaliser/" target="_blank">Open Tool</a></div>
+      <div class="tool-card"><h3>Author Starts</h3><a href="https://planomy.github.io/Author-Starts/" target="_blank">Open Tool</a></div>
+      <div class="tool-card"><h3>Word Slider</h3><a href="https://planomy.github.io/Word-Slider/" target="_blank">Open Tool</a></div>
+      <div class="tool-card"><h3>Word Weaver</h3><a href="https://planomy.github.io/Word-Weaver/" target="_blank">Open Tool</a></div>
+      <div class="tool-card"><h3>English Test II</h3><a href="https://planomy.github.io/English-Test-II/" target="_blank">Open Tool</a></div>
+      <div class="tool-card"><h3>Curriculum Error Lab</h3><a href="https://planomy.github.io/Curriculum-Error-Lab/" target="_blank">Open Tool</a></div>
+      <div class="tool-card"><h3>English Test I</h3><a href="https://planomy.github.io/English-Test-I/" target="_blank">Open Tool</a></div>
+      <div class="tool-card"><h3>The Great Spelling Bee</h3><a href="https://planomy.github.io/The-Great-Seplling-Bee/" target="_blank">Open Tool</a></div>
+      <div class="tool-card"><h3>Spellizabeth</h3><a href="https://planomy.github.io/Spellizabeth/" target="_blank">Open Tool</a></div>
+      <div class="tool-card"><h3>Tense Converter</h3><a href="https://planomy.github.io/Tense-Converter/" target="_blank">Open Tool</a></div>
+      <div class="tool-card"><h3>Spelliza</h3><a href="https://planomy.github.io/Spelliza/" target="_blank">Open Tool</a></div>
+      <div class="tool-card"><h3>Sophisticated Sentence Builder</h3><a href="https://planomy.github.io/Sophisticated-Sentence-Builder/" target="_blank">Open Tool</a></div>
+      <div class="tool-card"><h3>Power Verbs</h3><a href="https://planomy.github.io/Power-Verbs/" target="_blank">Open Tool</a></div>
+      <div class="tool-card"><h3>Scribble Starter</h3><a href="https://planomy.github.io/Scribble-Starter/" target="_blank">Open Tool</a></div>
+      <div class="tool-card"><h3>The Power Writer</h3><a href="https://planomy.github.io/The-Power-Writer/" target="_blank">Open Tool</a></div>
+      <div class="tool-card"><h3>The Sigma Story Writer Pro</h3><a href="https://planomy.github.io/The-Sigma-Story-Writer-Pro/" target="_blank">Open Tool</a></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Scribble Pro. Built for learning and creativity.</p>
+  </footer>
+
+  <!-- Firebase Auth Logic -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA9NwHIkh0KeNmi-08hgRjbRYd8gCzhcoQ",
+      authDomain: "scribble-pro-4aec7.firebaseapp.com",
+      projectId: "scribble-pro-4aec7",
+      storageBucket: "scribble-pro-4aec7.firebasestorage.app",
+      messagingSenderId: "831180379713",
+      appId: "1:831180379713:web:579ab16716ea1ed23818c0",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    onAuthStateChanged(auth, (user) => {
+      const loginLink = document.getElementById("loginLink");
+      const logoutLink = document.getElementById("logoutLink");
+
+      if (user) {
+        loginLink.style.display = "none";
+        logoutLink.style.display = "inline";
+      } else {
+        loginLink.style.display = "inline";
+        logoutLink.style.display = "none";
+      }
+    });
+
+    const logoutBtn = document.getElementById("logoutBtn");
+    if (logoutBtn) {
+      logoutBtn.addEventListener("click", () => {
+        signOut(auth).then(() => {
+          window.location.href = "login.html";
+        });
+      });
+    }
+  </script>
+</body>
+</html>

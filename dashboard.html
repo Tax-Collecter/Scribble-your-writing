@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scribble Pro Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-logo">Scribble Pro ✏️</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="classes.html">Classes</a></li>
+      <li><a href="dashboard.html" class="active">Dashboard</a></li>
+      <li id="loginLink"><a href="login.html">Login</a></li>
+      <li id="logoutLink" style="display:none;"><button id="logoutBtn">Logout</button></li>
+    </ul>
+  </nav>
+
+  <!-- Dashboard Section -->
+  <section class="dashboard">
+    <h1>Welcome, <span id="userName">User</span>!</h1>
+    <div class="user-info">
+      <p>Email: <span id="userEmail"></span></p>
+      <p>Here’s your current progress in Scribble Pro:</p>
+    </div>
+
+    <!-- Progress Cards -->
+    <div class="progress">
+      <div class="progress-card">
+        <h3>Story Burger</h3>
+        <div class="bar"><div class="fill" style="width: 70%;"></div></div>
+        <button onclick="window.open('https://planomy.github.io/Story-Burger/', '_blank')">Open Tool</button>
+      </div>
+      <div class="progress-card">
+        <h3>Word Weaver</h3>
+        <div class="bar"><div class="fill" style="width: 40%;"></div></div>
+        <button onclick="window.open('https://planomy.github.io/Word-Weaver/', '_blank')">Open Tool</button>
+      </div>
+      <div class="progress-card">
+        <h3>Spellizabeth</h3>
+        <div class="bar"><div class="fill" style="width: 60%;"></div></div>
+        <button onclick="window.open('https://planomy.github.io/Spellizabeth/', '_blank')">Open Tool</button>
+      </div>
+      <!-- Add more tools here with dynamic progress if you implement Firebase database -->
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Scribble Pro. Built for learning and creativity.</p>
+  </footer>
+
+  <!-- Firebase Auth Logic -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA9NwHIkh0KeNmi-08hgRjbRYd8gCzhcoQ",
+      authDomain: "scribble-pro-4aec7.firebaseapp.com",
+      projectId: "scribble-pro-4aec7",
+      storageBucket: "scribble-pro-4aec7.firebasestorage.app",
+      messagingSenderId: "831180379713",
+      appId: "1:831180379713:web:579ab16716ea1ed23818c0",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const userName = document.getElementById("userName");
+    const userEmail = document.getElementById("userEmail");
+    const loginLink = document.getElementById("loginLink");
+    const logoutLink = document.getElementById("logoutLink");
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        userName.textContent = user.displayName || "Scribbler";
+        userEmail.textContent = user.email;
+        loginLink.style.display = "none";
+        logoutLink.style.display = "inline";
+      } else {
+        // Redirect to login if not signed in
+        window.location.href = "login.html";
+      }
+    });
+
+    const logoutBtn = document.getElementById("logoutBtn");
+    if (logoutBtn) {
+      logoutBtn.addEventListener("click", () => {
+        signOut(auth).then(() => {
+          window.location.href = "login.html";
+        });
+      });
+    }
+  </script>
+</body>
+</html>
